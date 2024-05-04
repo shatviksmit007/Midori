@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Smart Score Calculator</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: "Outfit", sans-serif;
+      background-color: #111111;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      width: 700px;
+      padding: 30px;
+      background: linear-gradient(45deg, #1a1a1a, #404040);
+      border-radius: 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .circle-decoration {
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 100px;
+      height: 100px;
+      border-radius: 45%;
+      background: radial-gradient(circle at 30px 10px, #b0ffca 0%, #3bffde 100%)
+    }
+
+    .circle-decoration-2 {
+      position: absolute;
+      bottom: -50px;
+      right: -50px;
+      width: 100px;
+      height: 100px;
+      border-radius: 47%;
+      background: radial-gradient(circle at 30px 10px, #775fff 0%, #fdb7ff 100%)
+	}
+
+    h2 {
+      font-size: 50px; /* Increased font size */
+      margin-bottom: 60px;
+      text-align: center;
+      color: #fff;
+      font-weight: 600; /* Slightly heavier weight */
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .input-field {
+      width: 600px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+      color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle box-shadow */
+    }
+
+    .button {
+      background-color: #5038a8;
+      font-family: "Outfit";
+      font-size: 16px;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 20px;
+	  margin-bottom: 30px;
+      cursor: pointer;
+      transition: background-color 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .button:hover {
+      background-color: #381b5e;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+	.input-field option {
+  	background-color: #111111;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="circle-decoration"></div>
+    <div class="circle-decoration-2"></div>
+    <h2>Smart Score Calculator</h2>
+    <form id="smart-score-form">
+      <div class="form-group">
+        <label for="distance" class="label">Distance Traveled (km)</label>
+        <input type="number" id="distance" class="input-field" required>
+      </div>
+      <div class="form-group">
+        <label for="transport" class="label">Type of Public Transport Used</label>
+        <select id="transport" class="input-field" required>
+          <option value="bus">Bus</option>
+          <option value="train">Train</option>
+          <option value="metro">Metro</option>
+          <option value="electric_bus">Electric Bus</option>
+        </select>
+      </div>
+      <button class="button" type="submit">Calculate Smart Score</button>
+    </form>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const form = document.querySelector('#smart-score-form');
+    const resultDiv = document.querySelector('#result');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const distance = document.querySelector('#distance').value;
+      const transport = document.querySelector('#transport').value;
+
+      // Generate random points based on distance and transport type
+      let points = 0;
+      if (distance > 10) {
+        points += 20;
+      }
+      if (transport === 'electric_bus') {
+        points += 30;
+      } else if (transport === 'metro') {
+        points += 20;
+      } else if (transport === 'train') {
+        points += 15;
+      }
+
+      // Add some randomness to the points
+      points += Math.floor(Math.floor(Math.random() * 16) + 5);
+
+      // Disable the form to prevent multiple submissions
+      form.querySelector('button').disabled = true;
+
+      resultDiv.innerHTML = `Congrats! You won ${points} points!`;
+    });
+  </script>
+</body>
+</html>
